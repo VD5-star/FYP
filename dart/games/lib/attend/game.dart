@@ -6,7 +6,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../core/adaptive.dart';
 import '../core/audio.dart';
+import '../core/hardware_volume.dart';
 import '../core/synth.dart';
 import '../jigsaw/raster.dart';
 import 'draw.dart';
@@ -136,6 +138,13 @@ class _AttendGameState extends State<AttendGame>
     }
   }
 
+  void _hardwareVolume(int d) {
+    final int next = (logic.volume + d).clamp(0, 100);
+    logic.setVolume(next);
+    _audio.setVolume(next);
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _ticker.dispose();
@@ -149,30 +158,39 @@ class _AttendGameState extends State<AttendGame>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints c) {
-        if (logic.w != c.maxWidth || logic.h != c.maxHeight) {
-          logic.resize(c.maxWidth, c.maxHeight);
-        }
-        return Listener(
-          behavior: HitTestBehavior.opaque,
-          onPointerDown: (PointerDownEvent e) =>
-              logic.pointerDown(e.localPosition.dx, e.localPosition.dy),
-          onPointerMove: (PointerMoveEvent e) =>
-              logic.pointerMove(e.localPosition.dx, e.localPosition.dy),
-          onPointerUp: (PointerUpEvent e) =>
-              logic.pointerUp(e.localPosition.dx, e.localPosition.dy),
-          child: CustomPaint(
-            size: Size(c.maxWidth, c.maxHeight),
-            painter: AttendPainter(
-              logic: logic,
-              now: _now,
-              scenes: _scenes,
-              repaint: _frame,
+    return HardwareVolume(
+      onVolume: _hardwareVolume,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints c) {
+          if (logic.w != c.maxWidth || logic.h != c.maxHeight) {
+            logic.resize(c.maxWidth, c.maxHeight);
+          }
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.linear(
+                  (Adaptive.scale(context) * 0.96).clamp(0.85, 1.16)),
             ),
-          ),
-        );
-      },
+            child: Listener(
+              behavior: HitTestBehavior.opaque,
+              onPointerDown: (PointerDownEvent e) =>
+                  logic.pointerDown(e.localPosition.dx, e.localPosition.dy),
+              onPointerMove: (PointerMoveEvent e) =>
+                  logic.pointerMove(e.localPosition.dx, e.localPosition.dy),
+              onPointerUp: (PointerUpEvent e) =>
+                  logic.pointerUp(e.localPosition.dx, e.localPosition.dy),
+              child: CustomPaint(
+                size: Size(c.maxWidth, c.maxHeight),
+                painter: AttendPainter(
+                  logic: logic,
+                  now: _now,
+                  scenes: _scenes,
+                  repaint: _frame,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

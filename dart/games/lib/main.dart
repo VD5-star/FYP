@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'attend/game.dart';
+import 'core/adaptive.dart';
 import 'jigsaw/game.dart';
 import 'reach/game.dart';
 
@@ -46,6 +47,8 @@ class HomePage extends StatelessWidget {
       <Object>['jigsaw', 'put the picture back together', 1],
       <Object>['attend', 'five sounds, one at a time', 2],
     ];
+    final double s = Adaptive.scale(context);
+    final double maxW = Adaptive.isTablet(context) ? 600 : 520;
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -55,38 +58,38 @@ class HomePage extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: outer.maxHeight),
                 child: Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 520),
+                    constraints: BoxConstraints(maxWidth: maxW),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 8),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
                           child: Text(
                             'psybot',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 40,
-                              color: Color(0xFFD8DEE2),
+                              fontSize: Adaptive.font(context, 40),
+                              color: const Color(0xFFD8DEE2),
                             ),
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 32),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 32 * s.clamp(0.7, 1.1)),
                           child: Text(
                             'nothing is scored, nothing is kept',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF676C70),
+                              fontSize: Adaptive.font(context, 14),
+                              color: const Color(0xFF676C70),
                             ),
                           ),
                         ),
                         for (final List<Object> g in games)
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 8,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Adaptive.isSmallPhone(context) ? 16 : 24,
+                              vertical: 8 * s.clamp(0.85, 1.0),
                             ),
                             child: _Tile(
                               title: g[0] as String,

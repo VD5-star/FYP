@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../core/adaptive.dart';
+import '../core/hardware_volume.dart';
 import '../core/paint.dart';
 import 'audio.dart';
 import 'board.dart';
@@ -358,39 +360,67 @@ class _JigsawGameState extends State<JigsawGame>
     _after();
   }
 
+  void _hardwareVolume(int d) {
+    final int next = (logic.volume + d).clamp(0, 100);
+    logic.setVolume(next);
+    audio?.setVolume(next);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints c) {
-        final Size s = Size(c.maxWidth, c.maxHeight);
-        if (s != _size && s.width > 0 && s.height > 0) {
-          _size = s;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!mounted) return;
-            setState(() => logic.resize(s.width.toInt(), s.height.toInt()));
-          });
-        }
-        return Listener(
-          behavior: HitTestBehavior.opaque,
-          onPointerDown: _down,
-          onPointerMove: _move,
-          onPointerUp: _up,
-          onPointerCancel: (PointerCancelEvent e) =>
-              logic.pointerUp(e.localPosition.dx, e.localPosition.dy),
-          child: CustomPaint(
-            size: s,
-            painter: JigsawPainter(
-              logic: logic,
-              now: _last,
-              pieceArt: pieceArt,
-              reference: reference,
-              thumbs: thumbs,
-              setupThumb: setupThumb,
-              repaint: _tick,
+    return HardwareVolume(
+      onVolume: _hardwareVolume,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints c) {
+          final Size s = Size(c.maxWidth, c.maxHeight);
+          if (s != _size && s.width > 0 && s.height > 0) {
+            _size = s;
+            final int sw = s.width.toInt();
+            final int sh = s.height.toInt();
+            final int autoSide = Adaptive.jigsawSideForWidth(
+                s.width, s.height);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              final bool shouldAuto = logic.board == null &&
+                  logic.custom == null &&
+                  logic.page == pagePick;
+              if (shouldAuto &&
+                  autoSide != logic.side &&
+                  (sw < 500 || sw > 900)) {
+                logic.side = autoSide;
+              }
+              setState(() => logic.resize(sw, sh));
+            });
+          }
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.linear(
+                  (Adaptive.scale(context) * 0.97).clamp(0.85, 1.18)),
             ),
-          ),
-        );
-      },
+            child: Listener(
+              behavior: HitTestBehavior.opaque,
+              onPointerDown: _down,
+              onPointerMove: _move,
+              onPointerUp: _up,
+              onPointerCancel: (PointerCancelEvent e) =>
+                  logic.pointerUp(e.localPosition.dx, e.localPosition.dy),
+              child: CustomPaint(
+                size: s,
+                painter: JigsawPainter(
+                  logic: logic,
+                  now: _last,
+                  pieceArt: pieceArt,
+                  reference: reference,
+                  thumbs: thumbs,
+                  setupThumb: setupThumb,
+                  repaint: _tick,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import '../core/adaptive.dart';
+import '../core/hardware_volume.dart';
 import 'audio.dart';
 import 'draw.dart';
 import 'engine.dart';
@@ -60,6 +62,13 @@ class _ReachGameState extends State<ReachGame>
 
   void _applyVolume(int v) {
     audio?.setVolume(v);
+    if (mounted) setState(() {});
+  }
+
+  void _hardwareVolume(int delta) {
+    final int next = (logic.volume + delta).clamp(0, 100);
+    logic.setVolume(next);
+    _applyVolume(next);
   }
 
   void _playHit(Hit hit) {
@@ -151,33 +160,46 @@ class _ReachGameState extends State<ReachGame>
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints c) {
-        final Size s = Size(c.maxWidth, c.maxHeight);
-        if (s != _size && s.width > 0 && s.height > 0) {
-          _size = s;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (!mounted) return;
-            setState(() => logic.resize(s.width, s.height));
-          });
-        }
-        return Listener(
-          behavior: HitTestBehavior.opaque,
-          onPointerDown: _down,
-          onPointerMove: _move,
-          onPointerUp: _up,
-          onPointerCancel: _cancel,
-          child: CustomPaint(
-            size: s,
-            painter: ReachPainter(
-              logic: logic,
-              now: _last,
-              cameraReady: pose.supported,
-              repaint: _tick,
+    return HardwareVolume(
+      onVolume: _hardwareVolume,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints c) {
+          final Size s = Size(c.maxWidth, c.maxHeight);
+          if (s != _size && s.width > 0 && s.height > 0) {
+            _size = s;
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!mounted) return;
+              setState(() => logic.resize(s.width, s.height));
+            });
+          }
+          final double pad = Adaptive.safePad(context).top;
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.linear(
+                  (Adaptive.scale(context) * 0.95).clamp(0.85, 1.15)),
             ),
-          ),
-        );
-      },
+            child: Padding(
+              padding: EdgeInsets.only(top: pad > 0 ? 0 : 0),
+              child: Listener(
+                behavior: HitTestBehavior.opaque,
+                onPointerDown: _down,
+                onPointerMove: _move,
+                onPointerUp: _up,
+                onPointerCancel: _cancel,
+                child: CustomPaint(
+                  size: s,
+                  painter: ReachPainter(
+                    logic: logic,
+                    now: _last,
+                    cameraReady: pose.supported,
+                    repaint: _tick,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
