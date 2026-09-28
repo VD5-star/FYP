@@ -1,0 +1,99 @@
+{
+  "model": "full",
+  "label": "squat",
+  "frames": 290,
+  "detected_frames": 276,
+  "detection_rate": 0.9517241379310345,
+  "fps": 39.1027836877734,
+  "latency_ms": {
+    "best": 16.33,
+    "median": 17.48,
+    "p95": 21.27
+  },
+  "angles": {
+    "leftElbow": {
+      "n": 107,
+      "mean": 175.35,
+      "std": 2.882,
+      "range": 17.24,
+      "p95_step": 2.555
+    },
+    "rightElbow": {
+      "n": 170,
+      "mean": 172.86,
+      "std": 12.832,
+      "range": 110.18,
+      "p95_step": 23.937
+    },
+    "leftShoulder": {
+      "n": 259,
+      "mean": 15.89,
+      "std": 3.842,
+      "range": 25.69,
+      "p95_step": 3.051
+    },
+    "rightShoulder": {
+      "n": 276,
+      "mean": 12.74,
+      "std": 2.077,
+      "range": 15.38,
+      "p95_step": 1.866
+    },
+    "leftKnee": {
+      "n": 31,
+      "mean": 158.62,
+      "std": 2.829,
+      "range": 14.03,
+      "p95_step": 5.616
+    },
+    "leftHip": {
+      "n": 192,
+      "mean": 161.75,
+      "std": 12.868,
+      "range": 123.49,
+      "p95_step": 5.475
+    },
+    "rightHip": {
+      "n": 56,
+      "mean": 163.01,
+      "std": 6.045,
+      "range": 24.1,
+      "p95_step": 9.079
+    }
+  },
+  "angle_noise_summary": {
+    "worst_joint": "leftHip",
+    "worst_std": 12.868,
+    "median_std": 3.842,
+    "best_std": 2.077
+  },
+  "com_stability_px": 15.536,
+  "leftWrist_stability_px": 42.929,
+  "leftAnkle_stability_px": 45.711,
+  "leftKnee_stability_px": 34.632,
+  "landmark_jitter_px": {
+    "rightPinky": 43.152,
+    "rightIndex": 42.414,
+    "rightThumb": 40.007,
+    "rightWrist": 36.459,
+    "leftKnee": 34.632,
+    "leftHip": 14.354,
+    "rightHip": 13.988,
+    "leftElbow": 12.568,
+    "rightElbow": 11.3,
+    "rightShoulder": 7.551,
+    "leftShoulder": 7.236,
+    "leftEar": 3.968,
+    "rightEar": 3.787,
+    "leftEyeOuter": 2.942,
+    "rightEyeOuter": 2.931,
+    "leftEye": 2.718,
+    "leftEyeInner": 2.366,
+    "nose": 2.279,
+    "rightEye": 2.143,
+    "rightMouth": 2.078,
+    "rightEyeInner": 2.038,
+    "leftMouth": 1.903
+  },
+  "source": "squat.mp4"
+}

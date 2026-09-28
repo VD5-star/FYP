@@ -1,0 +1,16 @@
+name: mood_engine
+description: "Face affect, mood, baseline and session analysis logic for PsyBot. Pure Dart; models sit behind interfaces."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  collection: ^1.19.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  sqflite_common_ffi: ^2.3.7
+  test: ^1.25.0
