@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.psybot.engine_body">
+
+  <!--
+    Declared here because the plugin cannot function without it. The plugin
+    checks this permission but never requests it: the app layer asks, because
+    only the app can explain to the user why a mental-health assistant wants a
+    camera. See EngineBodyPlugin.startTracking.
+  -->
+  <uses-permission android:name="android.permission.CAMERA" />
+
+  
+  <uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" />
+</manifest>

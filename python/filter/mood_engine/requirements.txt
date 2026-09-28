@@ -1,0 +1,10 @@
+numpy
+opencv-contrib-python
+onnxruntime
+insightface
+sqlcipher3-wheels
+pytest
+
+# shared with c:\dev\games (attend, jigsaw, reach) which run on this same venv
+mediapipe
+sounddevice

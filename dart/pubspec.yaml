@@ -1,0 +1,10 @@
+name: psybot_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.13.2
+
+workspace:
+  - filter/engine_body
+  - filter/mood_engine
+  - games
