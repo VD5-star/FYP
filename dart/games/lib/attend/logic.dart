@@ -180,6 +180,10 @@ class AttendLogic {
     _volume = sliderValue(r, x, lo: volMin, hi: volMax);
   }
 
+  void setVolumeValue(int v) {
+    _volume = v.clamp(volMin, volMax);
+  }
+
   void tap(String key) {
     if (page == pageSettings) {
       if (key == 'close') closeSettings();

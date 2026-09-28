@@ -381,6 +381,16 @@ class JigsawLogic {
     onVolume?.call(volume);
   }
 
+  void setVolumeValue(int v) {
+    volume = v.clamp(volMin, volMax);
+    onVolume?.call(volume);
+  }
+
+  set side(int s) {
+    final int idx = sizeSteps.indexOf(s);
+    if (idx != -1) sizePick = idx;
+  }
+
   void Function(int v)? onVolume;
   void Function(double frac, double pan)? onPlaceSound;
   void Function()? onDoneSound;

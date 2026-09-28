@@ -140,7 +140,7 @@ class _AttendGameState extends State<AttendGame>
 
   void _hardwareVolume(int d) {
     final int next = (logic.volume + d).clamp(0, 100);
-    logic.setVolume(next);
+    logic.setVolumeValue(next);
     _audio.setVolume(next);
     setState(() {});
   }
