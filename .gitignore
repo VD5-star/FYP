@@ -1,0 +1,7 @@
+tools/
+**/.venv/
+**/site-packages/
+*.zip
+*.jar
+*.exe
+*.dll

@@ -1,0 +1,77 @@
+{
+  "model": "heavy",
+  "label": "squat",
+  "frames": 290,
+  "detected_frames": 290,
+  "detection_rate": 1.0,
+  "fps": 15.087640800207952,
+  "latency_ms": {
+    "best": 55.59,
+    "median": 57.34,
+    "p95": 61.07
+  },
+  "angles": {
+    "leftElbow": {
+      "n": 284,
+      "mean": 175.44,
+      "std": 14.517,
+      "range": 117.31,
+      "p95_step": 7.406
+    },
+    "rightElbow": {
+      "n": 287,
+      "mean": 175.17,
+      "std": 7.213,
+      "range": 101.18,
+      "p95_step": 5.561
+    },
+    "leftShoulder": {
+      "n": 290,
+      "mean": 19.16,
+      "std": 3.135,
+      "range": 23.27,
+      "p95_step": 2.564
+    },
+    "rightShoulder": {
+      "n": 287,
+      "mean": 15.54,
+      "std": 2.783,
+      "range": 28.81,
+      "p95_step": 2.933
+    }
+  },
+  "angle_noise_summary": {
+    "worst_joint": "leftElbow",
+    "worst_std": 14.517,
+    "median_std": 5.174,
+    "best_std": 2.783
+  },
+  "landmark_jitter_px": {
+    "leftIndex": 29.28,
+    "leftPinky": 28.575,
+    "leftThumb": 27.344,
+    "leftWrist": 23.908,
+    "rightIndex": 19.134,
+    "rightPinky": 19.059,
+    "rightThumb": 18.249,
+    "rightWrist": 16.688,
+    "leftHip": 13.083,
+    "rightHip": 11.905,
+    "rightElbow": 8.208,
+    "leftElbow": 7.245,
+    "rightEar": 3.184,
+    "rightEyeOuter": 2.982,
+    "leftEar": 2.471,
+    "leftShoulder": 2.165,
+    "rightEye": 2.105,
+    "leftEyeOuter": 1.86,
+    "rightMouth": 1.726,
+    "rightShoulder": 1.723,
+    "rightEyeInner": 1.713,
+    "leftEye": 1.576,
+    "leftMouth": 1.539,
+    "leftEyeInner": 1.345,
+    "nose": 1.256
+  },
+  "source": "squat.mp4"
+}

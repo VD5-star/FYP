@@ -1,0 +1,46 @@
+:1638:46: warning: variable length arrays in C++ are a Clang extension [-Wvla-cxx-extension]
+ 1638 |   VLA_ARRAY_ON_STACK(v4sf, scratch_on_stack, stack_allocate);
+      |                                              ^~~~~~~~~~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\pffft\pffft.c:81:74: note: expanded from macro 'VLA_ARRAY_ON_STACK'
+   81 | #  define VLA_ARRAY_ON_STACK(type__, varname__, size__) t
+
+ype__ varname__[size__];
+      |                                                                          ^~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\pffft\pffft.c:1638:46: note: read of non-const variable 'stack_allocate' is not allowed in a constant expression
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\pffft\pffft.c:1637:7: note: declared here
+ 1637 |   int stack_allocate = (scratch == 0 ? Ncvec*2 : 1);
+      |       ^
+
+
+ warning generated.
+
+
+:253:12: warning: result of comparison of constant -1 with expression of type 'char' is always false [-Wtautological-constant-out-of-range-compare]
+  253 |                         if (*mS == P_END)
+      |                             ~~~ ^  ~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\soloud\src\audiosource\vizsn\soloud_vizsn.cpp:267:13: warning: result of comparison of constant -2 with expression of type 'char' is always false [-Wtautological-constant-out-of-range-compare]
+  267 |                         for (i = plosive(*mS) ? 100 : 300; i; i--)
+      |                                  ^~~~~~~~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\soloud\src\audiosource\vizsn\soloud_vizsn.cpp:109:60: note: expanded from macro 'plosive'
+  109 | #define plosive
+
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\soloud\src\audiosource\vizsn\soloud_vizsn.cpp
+
+~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\soloud\src\audiosource\vizsn\soloud_vizsn.cpp:274:9: warning: result of comparison of constant -2 with expression of type 'char' is always false [-Wtautological-constant-out-of-range-compare]
+  274 |                         if (!plosive(mS[1]
+))
+      |                              ^~~~~~~~~~~~~~
+C:\Users\jubra\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_soloud-5.1.2\src\soloud\src\audiosource\vizsn\soloud_vizsn.cpp:109:60: note: expanded from macro 'plosive'
+  109 | #define plosive(a) ((((a) >= P_K) && ((
+a
+) <= P_P)) || (
+(a) == P_CLR))
+      |                                                        ~~~ ^  ~~~~~
+
+
+4
+
+ warnings generated.
+
+
